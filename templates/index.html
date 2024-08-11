@@ -1,0 +1,39 @@
+{% extends "base.html"%}
+
+{% block content %}
+<h2>Data</h2>
+<form action="{{url_for('predict')}}" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                {% for header in headings %}
+                    <th>{{header}}</th>
+                {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td>{{cell}}</td>
+                {% endfor%}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Predict Price</button>
+</form>
+
+{% if predictions %}
+<h2 class="text-primary">Evaluation Metrics</h2>
+<p>MSE: {{metrics.mse}}</p>
+<p>RMSE: {{metrics.rmse}}</p>
+<p>MAE: {{metrics.mae}}</p>
+<p>R SQUARED: {{metrics.r2}}</p>
+
+<img src="static/img/actual_vs_predicted.png" alt="plot">
+
+{% endif %}
+
+{% endblock %}
