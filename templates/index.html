@@ -1,28 +1,84 @@
 {% extends "base.html"%}
 
 {% block content %}
-<h2>Data</h2>
-<form action="{{url_for('predict')}}" method="post">
-    <table class="table">
-        <thead>
-            <tr>
-                {% for header in headings %}
-                    <th>{{header}}</th>
-                {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-            <tr>
-                {% for cell in row %}
-                <td>{{cell}}</td>
-                {% endfor%}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h1>Housing Price</h1>
 
-    <button type="submit" class="btn btn-primary">Predict Price</button>
+<form action="{{url_for('upload_file')}}" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="formFile" class="form-label mb-3">Upload a file of housing price data</label>
+        <input class="form-control" type="file" id="formFile" name="file">
+    </div>
+    <button type="submit" class="btn btn-secondary mb-3">Upload File</button>
+</form>
+
+{% if upload_files %}
+<p>File Uploaded Succesfully</p>
+{% endif %}
+
+<p>Select a file to work with</p>
+
+<div class="dropdown mb-3">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Options
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+        {% for file_name in file_names %}
+            <a class="dropdown-item" href="#" onclick="handleSelection('{{file_name}}')">{{ file_name }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="selectedOption2">Selected Option:</label>
+    <span id="selectedOption2">None</span>
+</div>
+
+<p>The following data is used to make price predictions:</p>
+
+<form action="{{url_for('predict')}}" method="post">
+    <input type="hidden" id="selectedOptionInput" name="selectedOption" value="None">
+    <input type="hidden" id="selectedOptionInput2" name="selectedOption2" value="None">
+    <div class="table-responsive mb-3">
+        <table class="table" id="data-table">
+            <thead id="table-header">
+                <tr>
+                    {% for header in headings %}
+                        <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                {% for row in data %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{cell}}</td>
+                    {% endfor%}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p>Select an option to generate a prediction</p>
+
+    <div class="dropdown mb-3">
+        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Options
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression')">Multiple Linear Regression</a>
+            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression with lasso regularization')">Multiple Linear Regression (lasso)</a>
+            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression with ridge regularization')">Multiple Linear Regression (ridge)</a>
+            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression with elastic net regularization')">Multiple Linear Regression (elastic net)</a>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="selectedOption">Selected Option:</label>
+        <span id="selectedOption">None</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3">Predict Price</button>
 </form>
 
 {% if predictions %}
@@ -36,4 +92,60 @@
 
 {% endif %}
 
+<!--JavaScript code to work specially with the dropdown button-->
+<script>
+    function updateLabel(option) {
+        document.getElementById('selectedOption').textContent = option;
+        document.getElementById('selectedOptionInput').value = option;
+    }
+
+    //handleSelection enables to use two functions in on event on the dropdown button
+    function handleSelection(fileName) {
+    updateLabel2(fileName);
+    updateTable(fileName);
+    }
+
+    function updateLabel2(option) {
+        document.getElementById('selectedOption2').textContent = option;
+        document.getElementById('selectedOptionInput2').value = option;
+    }
+
+    function updateTable(fileName) {
+        fetch(`/data/${fileName}`)
+        .then(response => response.json())
+        .then(data => {
+            const tableHeader = document.getElementById('table-header');
+            const tableBody = document.getElementById('table-body');
+
+            // Clear the current table data
+            tableHeader.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            // Set table headers
+            if (data.headers) {
+                const thead = document.createElement('tr');
+                data.headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    thead.appendChild(th);
+                });
+                tableHeader.appendChild(thead);
+            }
+
+            // Set table rows
+            if (data.rows) {
+                data.rows.forEach(row => {
+                    const tr = document.createElement('tr');
+                    row.forEach(cell => {
+                        const td = document.createElement('td');
+                        td.textContent = cell;
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+</script>
 {% endblock %}
