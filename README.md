@@ -12,6 +12,9 @@ python 3.11.2
 --INSTALLING FLASK IN VIRTUAL ENVIRONMENT
 pip install flask
 
+--INSTALL OTHER PYTHON LIBRARIES
+(use as guide the requirements.txt file)
+
 --ESTABLISH THE FLASK STRUCTURE
 |
 |___app.py (https://flask.palletsprojects.com/en/2.3.x/debugging/)
