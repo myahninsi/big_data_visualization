@@ -1,0 +1,231 @@
+{% extends "base.html"%}
+
+{% block content %}
+<form method="post" action="{{url_for('predict_price')}}">
+  <!--HOUSE INPUTS-->
+  <!-- Floors -->
+  <div class="form-group row">
+    <label for="floors" class="col-sm-2 col-form-label">Floors</label>
+    <div class="col-sm-4">
+        <input type="number" class="form-control" id="floors" placeholder="Enter number of floors">
+    </div>
+  </div>
+
+  <!-- Bedrooms -->
+  <div class="form-group row">
+      <label for="bedrooms" class="col-sm-2 col-form-label">Bedrooms</label>
+      <div class="col-sm-4">
+          <input type="number" class="form-control" id="bedrooms" placeholder="Enter number of bedrooms">
+      </div>
+  </div>
+
+  <!-- Bathrooms -->
+  <div class="form-group row">
+      <label for="bathrooms" class="col-sm-2 col-form-label">Bathrooms</label>
+      <div class="col-sm-4">
+          <input type="number" class="form-control" id="bathrooms" placeholder="Enter number of bathrooms">
+      </div>
+  </div>
+
+  <!-- Year Built -->
+  <div class="form-group row">
+    <label for="yr_built" class="col-sm-2 col-form-label">Year Built</label>
+    <div class="col-sm-4">
+        <input type="number" class="form-control" id="yr_built" placeholder="Enter year built">
+    </div>
+  </div>
+  <!-- Sqft Living -->
+  <div class="form-group row">
+      <label for="sqft_living" class="col-sm-2 col-form-label">Sqft Living</label>
+      <div class="col-sm-4">
+          <input type="number" class="form-control" id="sqft_living" placeholder="Enter square feet living">
+      </div>
+  </div>
+
+  <!-- Sqft Lot -->
+  <div class="form-group row">
+      <label for="sqft_lot" class="col-sm-2 col-form-label">Sqft Lot</label>
+      <div class="col-sm-4">
+          <input type="number" class="form-control" id="sqft_lot" placeholder="Enter square feet lot">
+      </div>
+  </div>
+
+   <!-- Sqft Basement -->
+   <div class="form-group row">
+      <label for="sqft_basement" class="col-sm-2 col-form-label">Sqft Basement</label>
+      <div class="col-sm-4">
+          <input type="number" class="form-control" id="sqft_basement" placeholder="Enter square feet basement">
+      </div>
+    </div>
+  
+  <!-- Sqft Lot15 -->
+  <div class="form-group row">
+    <label for="sqft_lot15" class="col-sm-2 col-form-label">Sqft Lot 15</label>
+    <div class="col-sm-4">
+        <input type="number" class="form-control" id="sqft_lot15" placeholder="Enter lot size for 15 nearest properties in square feet ">
+    </div>
+  </div>
+
+  <!-- Waterfront -->
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Waterfront</label>
+    <div class="col-sm-10 d-flex">
+        <div class="form-check me-3">
+            <input class="form-check-input" type="radio" name="waterfront" id="waterfront1" value="1">
+            <label class="form-check-label" for="waterfront1">
+                Yes
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="waterfront" id="waterfront0" value="0">
+            <label class="form-check-label" for="waterfront0">
+                No
+            </label>
+        </div>
+    </div>
+  </div>
+
+  <!-- Renovated -->
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Renovated</label>
+    <div class="col-sm-10 d-flex">
+        <div class="form-check me-3">
+            <input class="form-check-input" type="radio" name="renovated" id="renovated1" value="1">
+            <label class="form-check-label" for="renovated1">
+                Yes
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="renovated" id="renovated0" value="0">
+            <label class="form-check-label" for="renovated0">
+                No
+            </label>
+        </div>
+    </div>
+  </div>
+
+  <!-- View -->
+  <div class="form-group row">
+    <label for="view" class="col-sm-2 col-form-label">View</label>
+    <div class="col-sm-4">
+        <select class="form-select" id="view" name="view">
+          <option value="" disabled selected>Select a quality level of property view</option>  
+          <option value="0">Very Poor</option>
+          <option value="1">Poor</option>
+          <option value="2">Fair</option>
+          <option value="3">Good</option>
+          <option value="4">Excellent</option>
+        </select>
+    </div>
+  </div>
+
+  <!-- Condition -->
+  <div class="form-group row">
+    <label for="condition" class="col-sm-2 col-form-label">Condition</label>
+    <div class="col-sm-4">
+        <select class="form-select" id="condition" name="condition">
+          <option value="" disabled selected>Select an overall condition rating</option>
+      
+            <option value="1">Very Poor</option>
+            <option value="2">Poor</option>
+            <option value="3">Fair</option>
+            <option value="4">Good</option>
+            <option value="5">Excellent</option>
+        </select>
+    </div>
+  </div>
+
+  <!-- Grade -->
+  <div class="form-group row">
+    <label for="grade" class="col-sm-2 col-form-label">Grade</label>
+    <div class="col-sm-4">
+        <select class="form-select" id="grade" name="grade">
+          <option value="" disabled selected>Select an overall grade rating</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+        </select>
+    </div>
+  </div>
+
+  <!-- Zipcode Label-->
+  <div class="form-group row">
+    <label for="zipcode" class="col-sm-2 col-form-label">Zipcode</label>
+    <div class="col-sm-4">
+        <select class="form-select" id="zipcode" name="zipcode">
+          <option value="" disabled selected>Select a zipcode</option>
+          {% for zipcode in zipcodes %}
+          <option value="{{ zipcode.zipcode_label }}">{{ zipcode.zipcode }}</option>
+          {% endfor %}
+        </select>
+    </div>
+  </div>
+
+  <!--MODEL INPUTS-->
+  <!-- Grade -->
+  <div class="form-group row">
+    <label for="regression" class="col-sm-2 col-form-label">Prediction Technique</label>
+    <div class="col-sm-4">
+        <select class="form-select" id="regression" name="regression">
+          <option value="" disabled selected>Select a prediction technique</option>
+          <option value="mlr">Multiple Linear Regression</option>
+          <option value="mlr_lasso">Multiple Linear Regression with Lasso Regularization</option>
+          <option value="mlr_ridge">Multiple Linear Regression with Ridge Regularization</option>
+          <option value="mlr_elasticnet">Multiple Linear Regression with Elastic Net Regularization</option>
+        </select>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Predict Price</button>
+</form>
+
+{% if predictions %}
+<div class="form-group row">
+  <label for="predict_price" class="col-sm-2 col-form-label">Predicted Price</label>
+  <div class="col-sm-10">
+      <span id="predict_price" class="form-control-plaintext">{{predicted_price}}</span>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="r2" class="col-sm-2 col-form-label">R Squared</label>
+  <div class="col-sm-10">
+      <span id="r2" class="form-control-plaintext">{{r2}}</span>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="rmse" class="col-sm-2 col-form-label">RMSE</label>
+  <div class="col-sm-10">
+      <span id="rmse" class="form-control-plaintext">{{rmse}}</span>
+  </div>
+</div>
+
+  {% if mlr_name == "mlr" %}
+    <img src="static/img/mlr_plot_testvspred.png" alt="plot">
+    <img src="static/img/mlr_residuals_plot.png" alt="plot">
+  {% elif mlr_name == "mlr_lasso" %}
+    <img src="static/img/mlr_lasso_plot_testvspred.png" alt="plot">
+    <img src="static/img/mlr_lasso_residuals_plot.png" alt="plot">
+  {% elif mlr_name == "mlr_ridge" %}
+    <img src="static/img/mlr_ridge_plot_testvspred.png" alt="plot">
+    <img src="static/img/mlr_ridge_residuals_plot.png" alt="plot">
+  {% elif mlr_name == "mlr_elasticnet" %}
+    <img src="static/img/mlr_elasticnet_plot_testvspred.png" alt="plot">
+    <img src="static/img/mlr_elasticnet_residuals_plot.png" alt="plot">
+  {% else %}
+  <p>No valid prediction technique selected.</p>
+  {% endif %}
+
+{% endif %}
+
+{% endblock %}

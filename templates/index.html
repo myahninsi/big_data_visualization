@@ -15,18 +15,21 @@
 <p>File Uploaded Succesfully</p>
 {% endif %}
 
-<p>Select a file to work with</p>
+<div class="d-flex align-items-center">
+    <p>Select a file to work with -></p>
 
-<div class="dropdown mb-3">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Options
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-        {% for file_name in file_names %}
-            <a class="dropdown-item" href="#" onclick="handleSelection('{{file_name}}')">{{ file_name }}</a>
-        {% endfor %}
+    <div class="dropdown mb-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Options
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            {% for file_name in file_names %}
+                <a class="dropdown-item" href="javascript:void(0)" onclick="handleSelection('{{file_name}}')">{{ file_name }}</a>
+            {% endfor %}
+        </div>
     </div>
 </div>
+
 
 <div class="mb-3">
     <label for="selectedOption2">Selected Option:</label>
@@ -38,7 +41,7 @@
 <form action="{{url_for('predict')}}" method="post">
     <input type="hidden" id="selectedOptionInput" name="selectedOption" value="None">
     <input type="hidden" id="selectedOptionInput2" name="selectedOption2" value="None">
-    <div class="table-responsive mb-3">
+    <div class="table-responsive mb-3" id="table-container">
         <table class="table" id="data-table">
             <thead id="table-header">
                 <tr>
@@ -59,20 +62,22 @@
         </table>
     </div>
 
-    <p>Select an option to generate a prediction</p>
+    <div class="d-flex align-items-center">
+        <p>Select an option to generate a prediction -></p>
 
-    <div class="dropdown mb-3">
-        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Options
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression')">Multiple Linear Regression</a>
-            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression with lasso regularization')">Multiple Linear Regression (lasso)</a>
-            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression with ridge regularization')">Multiple Linear Regression (ridge)</a>
-            <a class="dropdown-item" href="#" onclick="updateLabel('Multiple Linear Regression with elastic net regularization')">Multiple Linear Regression (elastic net)</a>
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Options
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="javascript:void(0)" onclick="updateLabel('Multiple Linear Regression')">Multiple Linear Regression</a>
+                <a class="dropdown-item" href="javascript:void(0)" onclick="updateLabel('Multiple Linear Regression with lasso regularization')">Multiple Linear Regression (lasso)</a>
+                <a class="dropdown-item" href="javascript:void(0)" onclick="updateLabel('Multiple Linear Regression with ridge regularization')">Multiple Linear Regression (ridge)</a>
+                <a class="dropdown-item" href="javascript:void(0)" onclick="updateLabel('Multiple Linear Regression with elastic net regularization')">Multiple Linear Regression (elastic net)</a>
+            </div>
         </div>
     </div>
-
+    
     <div class="mb-3">
         <label for="selectedOption">Selected Option:</label>
         <span id="selectedOption">None</span>
@@ -82,13 +87,47 @@
 </form>
 
 {% if predictions %}
-<h2 class="text-primary">Evaluation Metrics</h2>
-<p>MSE: {{metrics.mse}}</p>
-<p>RMSE: {{metrics.rmse}}</p>
-<p>MAE: {{metrics.mae}}</p>
-<p>R SQUARED: {{metrics.r2}}</p>
+<div class="container mt-5">
+    <h2 class="text-primary mb-4">Evaluation Metrics</h2>
+    <div class="row">
+        <div class="col-md-6 col-lg-4 metric-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">MSE</h5>
+                    <p class="card-text">{{metrics.mse}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 metric-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">RMSE</h5>
+                    <p class="card-text">{{metrics.rmse}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 metric-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">MAE</h5>
+                    <p class="card-text">{{metrics.mae}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 metric-card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">R SQUARED</h5>
+                    <p class="card-text">{{metrics.r2}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <img src="static/img/actual_vs_predicted.png" alt="plot">
+
+<img src="static/img/QQ_plot.png" alt="plot">
 
 {% endif %}
 
