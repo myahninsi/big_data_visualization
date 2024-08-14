@@ -1,7 +1,4 @@
-h1 {
-    color: maroon;
+#table-container {
+    height: 200px; /* Adjust if necessary*/
+    overflow-y: auto;
 }
-
-h2 {
-    color: greenyellow;
-} 
