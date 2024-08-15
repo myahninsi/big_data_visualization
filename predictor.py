@@ -21,37 +21,32 @@ def determine_model(name):                                                      
         pickle_dict = pickle.load(handle)
     
     if name=="mlr":
-        model=pickle_dict["linear_regression"]
+        loaded_model = joblib.load('pickle/multiple_linear_regression/linear_regression_model.pkl')
         model_r2=pickle_dict["linear_regression_r2"]
         model_rmse=pickle_dict["linear_regression_rmse"]
-        return model,model_r2,model_rmse
+        print("INGRESO 1")
+        return loaded_model,model_r2,model_rmse
     elif name=="mlr_lasso":
-        model=pickle_dict["lasso_regression"]
+        loaded_model = joblib.load('pickle/multiple_linear_regression/linear_regression_lasso_model.pkl')
         model_r2=pickle_dict["lasso_regression_r2"]
         model_rmse=pickle_dict["lasso_regression_rmse"]
-        return model,model_r2,model_rmse
+        return loaded_model,model_r2,model_rmse
     elif name=="mlr_ridge":
-        model=pickle_dict["ridge_regression"]
+        loaded_model = joblib.load('pickle/multiple_linear_regression/linear_regression_ridge_model.pkl')
         model_r2=pickle_dict["ridge_regression_r2"]
         model_rmse=pickle_dict["ridge_regression_rmse"]
-        return model,model_r2,model_rmse
+        return loaded_model,model_r2,model_rmse
     elif name=="mlr_elasticnet":
-        model=pickle_dict["elastic_net_regression"]
+        loaded_model = joblib.load('pickle/multiple_linear_regression/linear_regression_elasticnet_model.pkl')
         model_r2=pickle_dict["elastic_net_regression_r2"]
         model_rmse=pickle_dict["elastic_net_regression_rmse"]
-        return model,model_r2,model_rmse
+        return loaded_model,model_r2,model_rmse
     else:
         pass
     
 def predict_prices(model,data):
-    with open('pickle/multiple_linear_regression/mlr.pkl', 'rb') as handle:
-        pickle_dict = pickle.load(handle)
-    
-    #model=pickle_dict["linear_regression"]
-    scaler=pickle_dict["scaler"]
-    features=pickle_dict["features"]
-
-    scaled_data=scaler.transform(data[features])
+    loaded_scaler = joblib.load('pickle/scaler/minmax_scaler.pkl')
+    scaled_data=loaded_scaler.transform(data)
     y_pred = model.predict(scaled_data)
     return y_pred
 

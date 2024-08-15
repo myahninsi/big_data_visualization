@@ -14,20 +14,19 @@ def home():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route('/data/<filename>')
-def get_data(filename):
-    file_path=os.path.join("data",filename)
-    data=pd.read_csv(file_path)
+@app.route('/sample_data')
+def sample():
+    data=pd.read_excel("data/house_test_data.xlsx")
     headers=data.columns.tolist()
-    rows=data.values.tolist()
-    return jsonify({'headers':headers,'rows':rows})         #for dynamic update of the table it returns a json to use it with javscript in the HTML
+    rows=data.to_dict(orient="records")
+    return render_template("sample.html",headers=headers,rows=rows)
 
 @app.route('/predict',methods=['POST'])
 def predict_price():
     try:
         data = {
-            'bedrooms': [int(request.form.get('bedrooms', 0))],
-            'bathrooms': [int(request.form.get('bathrooms', 0))],
+            'bedrooms': [int(request.form.get('bedrooms',0))],
+            'bathrooms': [int(request.form.get('bathrooms',0))],
             'sqft_living': [float(request.form.get('sqft_living', 0.0))],
             'sqft_lot': [float(request.form.get('sqft_lot', 0.0))],
             'floors': [int(request.form.get('floors', 0))],
@@ -48,12 +47,11 @@ def predict_price():
         r2=round(r2,4)
         rmse=round(rmse,2)
         predicted_price=predict_prices(model,df)                #retrieves the price based on the model selected
-        print(predicted_price)
         
         if mlr_name in ("mlr","mlr_ridge"):
-            predicted_price=round(predicted_price[0][0],2)
+            predicted_price=round(predicted_price[0][0],2) #[[92.92]]
         else:
-            predicted_price=round(predicted_price[0],2)
+            predicted_price=round(predicted_price[0],2) #[92.92]
         
         zipcodes=zipcode_detail()
 
