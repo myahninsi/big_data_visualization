@@ -1,60 +1,124 @@
-STEPS PERFORMED FOR THE PROJECT
+# Big Data Visualization Project
 
-1. CREATE A VIRTUAL ENVIRONMENT
-py -3 -m venv .venv
+## Overview
+This project showcases an end-to-end implementation of a Flask-based web application for data visualization and prediction. The application integrates machine learning models, Python libraries, and a Power BI dashboard to provide an interactive data analysis experience.
 
-2. INITATE THE VIRTUAL ENVIRONMENT
-.venv\Scripts\activate 
+## Problem Statement
+E-commerce platforms face challenges in understanding customer behaviors, predicting key metrics like sales, and providing actionable insights to decision-makers. This project addresses these gaps by integrating machine learning, visualization, and a user-friendly interface to enhance data-driven decision-making.
 
-3. DEFINE PYTHON VERSION
-python 3.11.2
+## Features
+- **Flask Application**: Handles web requests, model predictions, and serves the HTML templates.
+- **Machine Learning**: Includes a pre-trained model for predictions.
+- **Interactive Dashboard**: Embedded Power BI dashboard for visualizing data insights.
+- **Deployment**: Hosted on Render with a live link.
 
-4. INSTALLING FLASK IN VIRTUAL ENVIRONMENT
+## Project Workflow
+
+### 1. Problem Definition
+   - Identify key challenges in customer behavior analysis and visualization for actionable insights.
+   - Define project goals: predictive modeling, interactive visualization, and deployment.
+
+### 2. Data Collection and Preprocessing
+   - Collect dataset from sources like Kaggle.
+   - Perform data cleaning, including handling missing values and outliers.
+   - Conduct feature engineering to prepare high-quality inputs for modeling.
+
+### 3. Exploratory Data Analysis (EDA)
+   - Visualize data distributions and relationships using Python libraries like Matplotlib and Seaborn.
+   - Uncover insights such as sales trends, customer behaviors, and feature importance.
+
+### 4. Model Development
+   - Implement multiple regression models: Linear, Lasso, Ridge, and ElasticNet Regression.
+   - Evaluate models using metrics such as R² and RMSE to ensure accuracy.
+
+### 5. Visualization and Dashboard Creation
+   - Create an interactive Power BI dashboard to present insights.
+   - Embed the Power BI dashboard into the Flask application for seamless user access.
+
+### 6. Application Development
+   - Develop a Flask-based front-end to enable real-time interaction with predictive models.
+   - Structure the application with modular components: `app.py`, `predictor.py`, and organized folders for templates, static files, and data.
+
+### 7. Deployment
+   - Generate a `requirements.txt` file using `pip freeze`.
+   - Host the application on Render with environment configuration (e.g., Python version).
+   - Test the live application for functionality and accessibility.
+
+## Environment Setup
+1. **Create a Virtual Environment**:
+   ```bash
+   py -3 -m venv .venv
+   ```
+2. **Activate the Virtual Environment**:
+   ```bash
+   .venv\Scripts\activate
+   ```
+3. **Define Python Version**: Python 3.11.2
+
+## Dependencies
+Install required libraries:
+```bash
 pip install Flask==3.0.3
-
-5. INSTALLING OTHER PYTHON LIBRARIES
 pip install pandas==2.2.2
 pip install matplotlib==3.9.1.post1
 pip install seaborn==0.13.2
 pip install numpy==2.0.1
 pip install scikit-learn==1.4.2
 pip install scipy==1.14.0
-pip install openyxl==3.1.5
+pip install openpyxl==3.1.5
+```
 
-6. ESTABLISH THE FLASK STRUCTURE
-* app.py : python file that manages the library flask and request from the web application
-* predictor.py : python file that manages the model and returns predictions
-* templates : folder that contains HTML files 
-* static : folder that contains CSS files and images necessary for the project 
-* pickle : folder that contains a pickle file where it can be retrieved the model
-* data : folder that can contains excel or csv files necessary for the project
+## Flask Application Structure
+- **`app.py`**: Manages Flask and handles web requests.
+- **`predictor.py`**: Manages the machine learning model and returns predictions.
+- **Folders**:
+  - **`templates`**: Contains HTML files.
+  - **`static`**: Contains CSS files and images.
+  - **`pickle`**: Stores the trained model in pickle format.
+  - **`data`**: Stores necessary Excel or CSV files.
 
-7. POWERBI DASHBOARD IN HTML
-* USE POWEBI DESKTOP AND CREATE A DASHBOARD
-* PUBLISH THE DASHBOARD INTO POWERBI SERVICE
-* PUBLISH TO WEB THE DASHBOARD AND EMBED CODE TO THE HTML
+## Power BI Dashboard Integration
+1. Create a dashboard using Power BI Desktop.
+2. Publish the dashboard to Power BI Service.
+3. Generate an embed code and include it in the HTML template.
 
-8. RUN THE FLASK APPLICATION LOCALLY
-python app.py
+## Running Locally
+1. Start the Flask application:
+   ```bash
+   python app.py
+   ```
+2. Access the application at `http://localhost:5000`.
 
-9. CREATE THE REQUIREMENTS FILE
-pip freeze > requirements.txt
+## Deployment to Render
+1. Create a [Render](https://render.com/) account.
+2. Deploy as a web service:
+   - Connect your GitHub repository.
+   - Select the free instance type.
+   - Add an environment variable: `PYTHON_VERSION=3.11.2`.
+3. Deploy and access your web application via the provided link.
+   - Example: [https://big-data-visualization-ssg0.onrender.com](https://big-data-visualization-ssg0.onrender.com)
 
-10. UPLOAD THE FLASK STRUCTURE TO A GITHUB REPOSITORY 
-* UPLOAD FILES, FOLDERS AND THE REQUIREMENTS.TXT (ADDING IN THE END THE LIBRARY: Gunicorn)
+## Folder Structure
+```
+.
+├── app.py
+├── predictor.py
+├── templates/
+├── static/
+├── pickle/
+├── data/
+├── requirements.txt
+```
 
-DEPLOYMENT IN RENDER
+## Live Demo
+Access the live application [here](https://big-data-visualization-ssg0.onrender.com).
 
-10. CREATE A RENDER ACCOUNT (https://render.com/)
-
-11. SELECT DEPLOY WEB SERVICE
-
-12. LINK A GITHUB ACCOUNT
-
-13. SELECT A GITHUB REPOSITORY AND CONNECT TO IT
-
-14. WITHIN THE CONFIGURATION SELECT FREE INSTANCE TYPE AND AS ENVIRONMENT VARIABLE PUT: PYTHON_VERSION 3.11.2
-
-15. CLICK ON DEPLOY WEB SERVICE AND WAIT UNTIL THE STATUS OF THE DEPLOY IS ON LIVE
-
-16. ACCESS THROUGH THE LINK GIVEN BY RENDER TO THE WEB APPLICATION (https://big-data-visualization-ssg0.onrender.com)
+## Skills Highlighted
+- Machine Learning
+- Regression Models
+- Data Visualization
+- Python
+- Power BI
+- Flask
+- GitHub
+- Cloud Deployment
